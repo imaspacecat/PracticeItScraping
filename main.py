@@ -20,7 +20,7 @@ s = req.sessions.session()
 r = s.post(url_login, data=payload)
 
 problems_solved = s.get("https://practiceit.cs.washington.edu/user/problems-solved").text
-
+print(problems_solved)
 links = re.findall("\/problem\/view.+(?=\")", problems_solved)
 
 driver = webdriver.Chrome()
@@ -37,7 +37,7 @@ for link in links:
     for r in driver.requests:
         if r.url == "https://practiceit.cs.washington.edu/test/enqueue-job":
             data = decode(r.body, r.headers.get('Content-Encoding', 'identity'))
-            print(
-                r.url + "/" + str(data.decode())
-            )
-            f.write(r.url + "/" + str(data.decode()))
+            # print(
+            #     r.url + "/" + str(data.decode())
+            # )
+            f.write(r.url + "?" + str(data.decode()) + "\n")
